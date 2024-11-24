@@ -1,3 +1,30 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // React rules
+    "react/no-unescaped-entities": "off", // Allows unescaped characters like '
+    // TypeScript rules
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Warn on unused variables, ignore variables prefixed with _
+    "@typescript-eslint/no-empty-interface": "warn", // Warn on empty interfaces instead of erroring
+    "@typescript-eslint/no-empty-function": "warn", // Allow empty functions with warnings
+
+    // Optional accessibility improvements
+    "jsx-a11y/alt-text": "warn", // Warn if images are missing alt text
+    "jsx-a11y/anchor-is-valid": "warn", // Warn if anchor tags are used improperly
+    "jsx-a11y/click-events-have-key-events": "warn", // Warn if click events lack keyboard accessibility
+
+    // Customize code style
+    "quotes": ["warn", "single", { "avoidEscape": true }], // Use single quotes unless escaping
+    "semi": ["warn", "always"], // Enforce semicolons
+    "indent": ["warn", 2], // Enforce consistent indentation (2 spaces)
+    "no-console": ["warn", { "allow": ["warn", "error"] }] // Warn on console.log, allow console.warn and console.error
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off" // Disable PropTypes enforcement for TypeScript files
+      }
+    }
+  ]
 }
