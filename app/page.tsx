@@ -1,135 +1,181 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code, Zap, Users, Calendar, Brain, Lightbulb, Rocket, Heart, Mail, Phone, MapPin, Star, Cloud, Palette, Shield, Wifi, Smartphone, ShoppingCart, Menu, ChevronDown, ChevronLeft, ChevronRight, X, Leaf } from 'lucide-react'
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { ArrowRight, Code, Search, Sliders, ShoppingCart, Palette, PenToolIcon as Tool, Mail, Phone, MapPin, ChevronDown, Check, Star, Users, Zap, Shield } from 'lucide-react'
+import DynamicHeader from '@/components/DynamicHeader'
+import { Carousel } from "@/components/ui/carousel"
 import { blogPosts } from '@/lib/blogPosts'
 
-import { Service, Project, Testimonial } from '@/lib/types'
+type Service = {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  features: string[];
+}
 
-const GradientElephantLogo = () => (
-  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    🐘 WebShack
+type Project = {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+  fullDescription: string;
+  technologies: string[];
+  link: string;
+}
+
+const services: Service[] = [
+  {
+    title: "Web Design & Development",
+    description: "Create stunning and functional websites that reflect your brand's identity.",
+    icon: <Palette className="w-6 h-6 text-blue-400" />,
+    features: ["Responsive design", "User-friendly layouts", "SEO-friendly structures", "Hosting setup"],
+  },
+  {
+    title: "E-Commerce Solutions",
+    description: "Build powerful online stores to boost your sales and reach.",
+    icon: <ShoppingCart className="w-6 h-6 text-green-400" />,
+    features: ["Beautiful product pages", "Secure payment integration", "Cart recovery", "Product recommendations"],
+  },
+  {
+    title: "Full-Stack Applications",
+    description: "Develop custom applications to solve your unique business challenges.",
+    icon: <Code className="w-6 h-6 text-purple-400" />,
+    features: ["End-to-end development", "Scalable architecture", "Real-time features", "API integration"],
+  },
+  {
+    title: "SEO & Digital Marketing",
+    description: "Boost your online presence and reach your target audience effectively.",
+    icon: <Search className="w-6 h-6 text-yellow-400" />,
+    features: ["SEO optimization", "Analytics setup", "Content strategy", "Social media campaigns"],
+  },
+  {
+    title: "Maintenance & Support",
+    description: "Keep your digital assets secure, updated, and performing optimally.",
+    icon: <Tool className="w-6 h-6 text-red-400" />,
+    features: ["Regular updates", "Security monitoring", "Performance optimization", "24/7 support"],
+  },
+]
+
+const GradientLogo = () => (
+  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 flex items-center">
+    <span className="mr-2">🐘</span>
+    WebShack
   </span>
 )
 
-const DynamicHeader = ({ logo }: { logo: React.ReactNode }) => {
-  const [isScrolled, setIsScrolled] = useState(false)
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "ClassMate",
+    image: "/placeholder.svg",
+    description: "A Chrome extension for enhanced classroom collaboration.",
+    fullDescription:
+      "ClassMate is a Chrome extension built to enhance classroom collaboration, focusing on group projects and peer learning. It integrates with learning platforms like Canvas, making it easier for students and instructors to stay connected.",
+    technologies: ["JavaScript", "Chrome Extension API", "Canvas LMS API", "AI"],
+    link: "https://example.com/classmate",
+  },
+  {
+    id: 2,
+    title: "EcoTrack",
+    image: "/placeholder.svg",
+    description: "Mobile app for tracking and reducing carbon footprint.",
+    fullDescription:
+      "EcoTrack is a mobile application designed to help users track and reduce their carbon footprint. It provides personalized recommendations, challenges, and rewards to encourage sustainable living practices.",
+    technologies: ["React Native", "Node.js", "MongoDB", "Machine Learning"],
+    link: "https://example.com/ecotrack",
+  },
+  {
+    id: 3,
+    title: "HealthHub",
+    image: "/placeholder.svg",
+    description: "Centralized platform for managing health records and appointments.",
+    fullDescription:
+      "HealthHub is a comprehensive health management platform that allows users to store and access their medical records, schedule appointments, and receive personalized health insights. It integrates with various healthcare providers to ensure seamless data flow.",
+    technologies: ["React", "Express.js", "PostgreSQL", "HL7 FHIR"],
+    link: "https://example.com/healthhub",
+  },
+];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+const plans = [
+  {
+    name: "Static Websites",
+    price: "$200 - $400",
+    description: "For simple, professional websites tailored to your brand.",
+    features: [
+      "Custom design",
+      "Responsive layout",
+      "Basic SEO optimization",
+      "Contact form integration",
+    ],
+  },
+  {
+    name: "Dynamic Websites",
+    price: "Starting at $400",
+    description: "Includes interactive features, CMS integration, and more.",
+    features: [
+      "All Static Website features",
+      "Content Management System",
+      "Dynamic content",
+      "User authentication",
+    ],
+  },
+  {
+    name: "E-Commerce Solutions",
+    price: "Starting at $500",
+    description: "Complete online store setup with advanced features.",
+    features: [
+      "All Dynamic Website features",
+      "Product catalog",
+      "Shopping cart",
+      "Secure payment integration",
+    ],
+  },
+]
 
-  return (
-    <motion.header 
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? 'bg-black/50 backdrop-blur-lg' : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="container flex h-16 items-center justify-between">
-        <Link className="flex items-center space-x-2" href="/">
-          {logo}
-        </Link>
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/projects">Projects</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/blog">Blog</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/about">About</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/contact">Contact</Link>
-        </nav>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" className="px-0 text-white md:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] bg-black/90 text-white">
-            <nav className="flex flex-col space-y-4 mt-6">
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/projects">Projects</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/blog">Blog</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/about">About</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/contact">Contact</Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </motion.header>
-  )
-}
+const testimonials = [
+  { id: 1, name: "Sarah J.", role: "E-Commerce Entrepreneur", content: "WebShack transformed our online presence. Our website not only looks amazing but has also doubled our traffic!" },
+  { id: 2, name: "David K.", role: "Small Business Owner", content: "Fast, professional, and creative! WebShack delivered beyond our expectations. Highly recommend." },
+  { id: 3, name: "Emily R.", role: "Marketing Director", content: "The team at WebShack brought our vision to life. They're true partners in our success." },
+];
+
+const steps = [
+  { title: "Initial Consultation", description: "We start by understanding your business, goals, and vision.", icon: <Users className="w-6 h-6 text-blue-400" /> },
+  { title: "Strategy & Planning", description: "We craft a clear plan for your website or application.", icon: <Sliders className="w-6 h-6 text-green-400" /> },
+  { title: "Design", description: "Our team designs a visually stunning and user-friendly interface.", icon: <Palette className="w-6 h-6 text-purple-400" /> },
+  { title: "Development", description: "We bring your vision to life with clean, efficient code.", icon: <Code className="w-6 h-6 text-yellow-400" /> },
+  { title: "Testing & Launch", description: "We thoroughly test every aspect before going live.", icon: <Zap className="w-6 h-6 text-red-400" /> },
+  { title: "Post-Launch Support", description: "We provide ongoing maintenance and support.", icon: <Shield className="w-6 h-6 text-indigo-400" /> },
+]
 
 export default function Home() {
-  const [currentProject, setCurrentProject] = useState(0)
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const projects = getProjects()
-  const testimonials = getTestimonials()
-
-  const nextProject = useCallback(() => {
-    setCurrentProject((prev) => (prev + 1) % projects.length)
-  }, [projects.length])
-
-  const prevProject = useCallback(() => {
-    setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length)
-  }, [projects.length])
-
-  const nextTestimonial = useCallback(() => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }, [testimonials.length])
-
-  useEffect(() => {
-    const projectTimer = setInterval(nextProject, 5000)
-    const testimonialTimer = setInterval(nextTestimonial, 8000)
-    return () => {
-      clearInterval(projectTimer)
-      clearInterval(testimonialTimer)
-    }
-  }, [nextProject, nextTestimonial])
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+      {/* Background Blobs */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute -inset-[10px] opacity-50">
           <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
           <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
           <div className="absolute bottom-0 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-6000"></div>
-          <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-8000"></div>
         </div>
       </div>
 
-      <DynamicHeader logo={<GradientElephantLogo />} />
+      <DynamicHeader logo={<GradientLogo />} />
 
-      <main className="relative z-10">
+      <main className="relative z-10 pt-16">
         <HeroSection />
-        <ProjectsSection 
-          projects={projects} 
-          currentProject={currentProject} 
-          setCurrentProject={setCurrentProject}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
-        <BlogSection blogPosts={blogPosts} />
-        <TestimonialsSection testimonials={testimonials} currentTestimonial={currentTestimonial} />
+        <ServicesSection services={services} />
+        <ProjectSection projects={projects} />
+        <TestimonialsSection testimonials={testimonials} />
+        <ProcessSection steps={steps} />
+        <PricingSection plans={plans} />
+        <BlogSection />
         <ContactSection />
       </main>
 
@@ -142,250 +188,206 @@ function HeroSection() {
   return (
     <section className="py-20 md:py-32 overflow-hidden relative">
       <div className="container mx-auto px-4 flex flex-col items-center text-center relative z-10">
-        <motion.h1 
-          className="text-4xl md:text-6xl font-bold mb-6 text-white"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Crafting Digital Experiences
-        </motion.h1>
-        <motion.p 
-          className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          We build innovative web solutions that drive business growth and user engagement.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <Button asChild className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
-            <Link href="/contact" className="text-white">Get Started</Link>
-          </Button>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16"
-        >
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+          WebShack: Crafting Digital Excellence
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl">
+          We build modern, functional, and visually stunning digital experiences that elevate businesses to new heights.
+        </p>
+        <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+          Get Started
+        </Button>
+        <div className="mt-16">
           <ChevronDown className="w-8 h-8 text-gray-400 animate-bounce" />
-        </motion.div>
-      </div>
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-6000"></div>
+        </div>
       </div>
     </section>
   )
 }
 
-function ProjectsSection({ projects, currentProject, setCurrentProject, selectedProject, setSelectedProject }: { 
-  projects: Project[]; 
-  currentProject: number; 
-  setCurrentProject: React.Dispatch<React.SetStateAction<number>>;
-  selectedProject: Project | null;
-  setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
-}) {
-  const nextProject = () => setCurrentProject((prev) => (prev + 1) % projects.length)
-  const prevProject = () => setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length)
-
+function ServicesSection({ services }: { services: Service[] }) {
   return (
     <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
-          Our Projects
+          Our Services
         </h2>
-        <div className="relative h-[400px] md:h-[600px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl shadow-2xl cursor-pointer" onClick={() => setSelectedProject(projects[currentProject])}>
-          <AnimatePresence initial={false} custom={currentProject}>
-            <motion.div
-              key={currentProject}
-              custom={currentProject}
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, x: 300 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -300 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Image
-                src={projects[currentProject].image}
-                alt={projects[currentProject].name}
-                layout="fill"
-                objectFit="cover"
-                className="absolute inset-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col items-start justify-end p-8">
-                <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">{projects[currentProject].name}</h3>
-                <p className="text-xl text-gray-300 mb-6 max-w-2xl">{projects[currentProject].description}</p>
-                <Button 
-                  className="bg-white text-gray-900 hover:bg-gray-200 transition-all duration-300 group relative overflow-hidden transform hover:scale-105"
-                >
-                  <span className="relative z-10">Learn More</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </Button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-          <Button
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-2"
-            onClick={(e) => { e.stopPropagation(); prevProject(); }}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
-          <Button
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-2"
-            onClick={(e) => { e.stopPropagation(); nextProject(); }}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </Button>
-        </div>
-        <div className="flex justify-center mt-8">
-          {projects.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 rounded-full mx-1 transition-all duration-300 ${
-                index === currentProject ? 'bg-blue-500 scale-125' : 'bg-gray-500 hover:bg-gray-400'
-              }`}
-              onClick={() => setCurrentProject(index)}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <Card key={index} className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg border-none h-full transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group">
+              <CardHeader>
+                <CardTitle className="flex items-center text-white group-hover:text-blue-400 transition-colors duration-300">
+                  {service.icon}
+                  <span className="ml-2">{service.title}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-gray-300 mb-4 group-hover:text-white transition-colors duration-300">
+                  {service.description}
+                </CardDescription>
+                <ul className="space-y-2">
+                  {service.features.map((feature: string, featureIndex: number) => (
+                    <li key={featureIndex} className="flex items-center text-gray-400 group-hover:text-gray-200 transition-colors duration-300">
+                      <ArrowRight className="w-4 h-4 mr-2 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
-      <AnimatePresence>
-        {selectedProject && (
-          <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-            <DialogContent className="sm:max-w-[700px] bg-gray-900/40 text-white border border-gray-600/20 rounded-2xl overflow-hidden p-0 backdrop-blur-xl">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="max-h-[80vh] overflow-y-auto custom-scrollbar"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src={selectedProject.image}
-                    alt={selectedProject.name}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
-                  <Button
-                    className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white rounded-full p-2"
-                    onClick={() => setSelectedProject(null)}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-                <div className="p-6">
-                  <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold flex items-center text-white">
-                      {selectedProject.icon}
-                      <span className="ml-2">{selectedProject.name}</span>
-                    </DialogTitle>
-                    <DialogDescription className="text-gray-300 mt-2">
-                      {selectedProject.description}
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="mt-6 space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-lg mb-2 text-purple-300">Key Features:</h4>
-                      <ul className="grid grid-cols-2 gap-2">
-                        {selectedProject.features.map((feature, index) => (
-                          <li key={index} className="flex items-center">
-                            <Badge variant="secondary" className="mr-2">
-                              <ArrowRight className="w-3 h-3 mr-1" />
-                            </Badge>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-lg mb-2 text-purple-300">Impact:</h4>
-                      <p className="text-gray-300">{selectedProject.impact}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-lg mb-2 text-purple-300">Future Plans:</h4>
-                      <ul className="space-y-1 text-gray-300">
-                        {selectedProject.futurePlans.map((plan, index) => (
-                          <li key={index} className="flex items-center">
-                            <Badge variant="outline" className="mr-2">
-                              <ArrowRight className="w-3 h-3 mr-1" />
-                            </Badge>
-                            {plan}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </DialogContent>
-          </Dialog>
-        )}
-      </AnimatePresence>
     </section>
   )
 }
 
-function BlogSection({ blogPosts }: { blogPosts: typeof import('@/lib/blogPosts').blogPosts }) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-
+function ProjectSection({ projects }: { projects: Project[] }) {
   return (
     <section className="py-20 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
-          Insights & Ideas
+          Our Projects
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.slice(0, 3).map((post, index) => (
-            <motion.div
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              onHoverStart={() => setHoveredIndex(index)}
-              onHoverEnd={() => setHoveredIndex(null)}
-            >
-              <Link href={`/blog/${post.slug}`}>
-                <Card className="bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg border-none hover:bg-opacity-70 transition-all duration-300 h-full shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden group">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-white group-hover:text-purple-300 transition-colors duration-300">
-                      <motion.div
-                        animate={{
-                          rotate: hoveredIndex === index ? 360 : 0,
-                        }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        {post.icon && <post.icon className="w-6 h-6 mr-2" />}
-                      </motion.div>
-                      <span>{post.title}</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-300 mb-4 text-lg">
-                      {post.excerpt}
-                    </CardDescription>
-                    <p className="text-sm text-gray-400">By {post.author} | {post.date}</p>
-                    <Button variant="outline" className="mt-4 text-purple-300 border-purple-500 hover:bg-purple-500 hover:text-white transition-all duration-300 backdrop-filter backdrop-blur-sm w-full">
-                      Read More
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
+        <Carousel projects={projects} className="w-full max-w-4xl mx-auto" />
+      </div>
+    </section>
+  )
+}
+
+function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
+  return (
+    <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
+          What Our Clients Say
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial) => (
+            <Card key={testimonial.id} className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg border-none h-full transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 mr-1 group-hover:text-yellow-300 transition-colors duration-300" />
+                  ))}
+                </div>
+                <blockquote className="text-gray-300 mb-4 group-hover:text-white transition-colors duration-300">{testimonial.content}</blockquote>
+                <footer>
+                  <strong className="text-white group-hover:text-blue-300 transition-colors duration-300">{testimonial.name}</strong>
+                  <p className="text-gray-400 text-sm group-hover:text-gray-200 transition-colors duration-300">{testimonial.role}</p>
+                </footer>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ProcessSection({ steps }: { steps: any[] }) {
+  return (
+    <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
+          Our Process
+        </h2>
+        <div className="relative">
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-500"></div>
+          {steps.map((step, index) => (
+            <div key={index} className={`flex items-center mb-8 ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+              <Card className={`bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg border-none w-1/2 ${index % 2 === 0 ? 'mr-8' : 'ml-8'} transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group`}>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center mr-4 group-hover:bg-blue-600 transition-colors duration-300">
+                      {step.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-300">{step.title}</h3>
+                  </div>
+                  <p className="text-gray-300 group-hover:text-white transition-colors duration-300">{step.description}</p>
+                </CardContent>
+              </Card>
+              <div className="w-4 h-4 bg-blue-500 rounded-full absolute left-1/2 transform -translate-x-1/2 group-hover:bg-blue-400 transition-colors duration-300"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function PricingSection({ plans }: { plans: any[] }) {
+  return (
+    <section className="py-20 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
+          Pricing Plans
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {plans.map((plan, index) => (
+            <Card key={index} className="bg-gray-900 border-none h-full flex flex-col transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-white group-hover:text-blue-300 transition-colors duration-300">{plan.name}</CardTitle>
+                <CardDescription className="text-gray-400 group-hover:text-gray-200 transition-colors duration-300">{plan.description}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-3xl font-bold text-blue-400 mb-6 group-hover:text-blue-300 transition-colors duration-300">{plan.price}</p>
+                <ul className="space-y-2">
+                  {plan.features.map((feature: string, featureIndex: number) => (
+                    <li key={featureIndex} className="flex items-center text-gray-300 group-hover:text-white transition-colors duration-300">
+                      <Check className="w-5 h-5 mr-2 text-green-500 group-hover:text-green-400 transition-colors duration-300" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <div className="p-6 mt-auto">
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300">Get Started</Button>
+              </div>
+            </Card>
           ))}
         </div>
         <div className="text-center mt-12">
-          <Button asChild className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
-            <Link href="/blog" className="text-white">Read More Insights</Link>
+          <p className="text-gray-300 mb-4">Need something custom? We've got you covered!</p>
+          <Button variant="outline" className="hover:bg-blue-500 hover:text-white transition-colors duration-300">Request a Quote</Button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function BlogSection() {
+  return (
+    <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
+          Latest from Our Blog
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {blogPosts.slice(0, 3).map((post, index) => (
+            <Link href={`/blog/${post.slug}`} key={index}>
+              <Card className="bg-gray-800 border-none overflow-hidden h-full transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group">
+                <Image
+                  src={post.image || "/placeholder.svg"}
+                  alt={post.title}
+                  width={400}
+                  height={200}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-300 transition-colors duration-300">{post.title}</h3>
+                  <p className="text-gray-400 mb-4 group-hover:text-gray-200 transition-colors duration-300">{post.excerpt}</p>
+                  <Button asChild variant="link" className="text-blue-400 hover:text-blue-300 p-0 transition-colors duration-300">
+                    <Link href={`/blog/${post.slug}`}>Read More</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+        <div className="text-center mt-12">
+          <Button asChild variant="outline" className="hover:bg-blue-500 hover:text-white transition-colors duration-300">
+            <Link href="/contact">Request Consultation</Link>
           </Button>
         </div>
       </div>
@@ -393,49 +395,32 @@ function BlogSection({ blogPosts }: { blogPosts: typeof import('@/lib/blogPosts'
   )
 }
 
-function TestimonialsSection({ testimonials, currentTestimonial }: { testimonials: Testimonial[]; currentTestimonial: number }) {
+function AboutSection() {
   return (
-    <section id="testimonials" className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+    <section className="py-20 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
-          Client Testimonials
-        </h2>
-        <div className="max-w-4xl mx-auto">
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={currentTestimonial}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg border-none shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                <CardContent className="pt-6">
-                  <div className="flex items-center mb-4">
-                    <Image
-                      src={testimonials[currentTestimonial].avatar}
-                      alt={testimonials[currentTestimonial].name}
-                      width={50}
-                      height={50}
-                      className="rounded-full mr-4"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-lg text-white">{testimonials[currentTestimonial].name}</h3>
-                      <p className="text-gray-400">{testimonials[currentTestimonial].position}</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-300 italic text-lg mb-4">"{testimonials[currentTestimonial].quote}"</p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`h-5 w-5 ${i < testimonials[currentTestimonial].rating ? 'text-yellow-400' : 'text-gray-600'}`} />
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </AnimatePresence>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">About WebShack</h2>
+            <p className="text-gray-300 mb-6 hover:text-white transition-colors duration-300">
+              WebShack is a team of passionate developers, designers, and digital strategists dedicated to crafting exceptional web experiences. With years of experience and a commitment to innovation, we help businesses of all sizes establish a powerful online presence.
+            </p>
+            <p className="text-gray-300 mb-6 hover:text-white transition-colors duration-300">
+              Our mission is to empower businesses with cutting-edge web solutions that drive growth, enhance user engagement, and deliver measurable results. We believe in the power of the web to transform businesses and create meaningful connections with audiences worldwide.
+            </p>
+            <Button asChild className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300">
+              <Link href="/about">Learn More About Us</Link>
+            </Button>
+          </div>
+          <div>
+            <Image
+              src="/placeholder.svg"
+              alt="About us image"
+              className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
+              width={500}
+              height={400}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -444,33 +429,32 @@ function TestimonialsSection({ testimonials, currentTestimonial }: { testimonial
 
 function ContactSection() {
   return (
-    <section className="py-20 bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+    <section className="py-20 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center text-white">
           Get in Touch
         </h2>
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h3 className="text-2xl font-semibold mb-4 text-blue-400">Contact Information</h3>
-            <div className="space-y-4">
-              <p className="flex items-center"><Mail className="mr-2 text-purple-400" /> studioswebshack@gmail.com</p>
-              <p className="flex items-center"><Phone className="mr-2 text-purple-400" /> (650) 450-8379</p>
-              <p className="flex items-center"><MapPin className="mr-2 text-purple-400" /> 123 Web Street, Digital City, 12345</p>
+        <div className="flex justify-center items-center">
+          <div className="w-full max-w-md p-8 bg-gray-800 bg-opacity-50 rounded-lg shadow-lg">
+            <div className="text-gray-300">
+              <h3 className="text-2xl font-bold mb-6 text-center">Contact Information</h3>
+              <div className="space-y-4">
+                <p className="flex items-center justify-center hover:text-white transition-colors duration-300">
+                  <Mail className="w-6 h-6 mr-3" /> email@example.com
+                </p>
+                <p className="flex items-center justify-center hover:text-white transition-colors duration-300">
+                  <Phone className="w-6 h-6 mr-3" /> +1 (123) 456-7890
+                </p>
+                <p className="flex items-center justify-center hover:text-white transition-colors duration-300">
+                  <MapPin className="w-6 h-6 mr-3" /> 123 WebShack St., Web City
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="space-y-4">
-            <Button 
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 text-white"
-              onClick={() => window.location.href = 'mailto:studioswebshack@gmail.com'}
-            >
-              Send Email Consultation
-            </Button>
-            <Button 
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 text-white"
-              onClick={() => window.location.href = 'tel:+16504508379'}
-            >
-              Call Us
-            </Button>
+            <div className="mt-8 text-center">
+              <Button asChild className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300">
+                <Link href="/contact">Request Consultation</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -480,127 +464,11 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between items-center">
-          <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <Link href="/" className="text-2xl font-bold flex items-center">
-              <span className="text-4xl mr-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">🐘</span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                WebShack
-              </span>
-            </Link>
-            <p className="mt-2 text-gray-400">Crafting digital experiences since 2023</p>
-          </div>
-          <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h3 className="text-lg font-semibold mb-4 text-blue-400">Quick Links</h3>
-            <ul className="space-y-2">
-              {['Projects', 'Blog', 'About', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase()}`} className="text-gray-400 hover:text-white transition-colors duration-300">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="w-full md:w-1/3">
-            <h3 className="text-lg font-semibold mb-4 text-blue-400">Follow Us</h3>
-            <div className="flex space-x-4">
-              {[
-                { href: "#", icon: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" },
-                { href: "#", icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" },
-                { href: "#", icon: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.995 16.979H7.005v-9.98h9.99v9.98zM9.503 7.006H7.005V4.508h2.498v2.498zm7.492 0h-2.498V4.508h2.498v2.498z" }
-              ].map((social, index) => (
-                <a key={index} href={social.href} className="text-gray-400 hover:text-white transition-colors duration-300">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d={social.icon} />
-                  </svg>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center text-gray-400">
-          © 2023 WebShack. All rights reserved.
-        </div>
+    <footer className="bg-gray-900 text-gray-400 py-6">
+      <div className="container mx-auto px-4 text-center">
+        <p className="hover:text-white transition-colors duration-300">© {new Date().getFullYear()} WebShack. All rights reserved.</p>
       </div>
     </footer>
   )
 }
 
-function getProjects(): Project[] {
-  return [
-    {
-      name: "E-commerce Platform",
-      description: "A scalable online marketplace built with Next.js and GraphQL",
-      image: "https://ik.imagekit.io/webshack/ecommerce-platform.jpg?updatedAt=1684788689573",
-      icon: <ShoppingCart className="w-6 h-6 mr-2" />,
-      features: ["Real-time inventory", "Secure payments", "User reviews"],
-      impact: "Increased client's online sales by 200% in the first quarter",
-      futurePlans: ["AI-powered product recommendations", "AR product previews"]
-    },
-    {
-      name: "Health & Fitness App",
-      description: "A comprehensive mobile app for tracking workouts and nutrition",
-      image: "https://ik.imagekit.io/webshack/fitness-app.jpg?updatedAt=1684788689528",
-      icon: <Heart className="w-6 h-6 mr-2" />,
-      features: ["Personalized workout plans", "Nutrition tracking", "Progress analytics"],
-      impact: "Helped over 100,000 users achieve their fitness goals",
-      futurePlans: ["Integration with wearable devices", "AI-powered coaching"]
-    },
-    {
-      name: "Smart Home IoT Dashboard",
-      description: "A centralized control system for connected home devices",
-      image: "https://ik.imagekit.io/webshack/smart-home.jpg?updatedAt=1684788689669",
-      icon: <Wifi className="w-6 h-6 mr-2" />,
-      features: ["Device management", "Energy monitoring", "Automation rules"],
-      impact: "Reduced energy consumption by 30% for users",
-      futurePlans: ["Voice control integration", "Predictive maintenance alerts"]
-    },
-    {
-      name: "AI-Powered Content Creator",
-      description: "An innovative tool for generating and optimizing digital content",
-      image: "https://ik.imagekit.io/webshack/ai-content-creator.jpg?updatedAt=1684788689461",
-      icon: <Brain className="w-6 h-6 mr-2" />,
-      features: ["Multi-format content generation", "SEO optimization", "Performance analytics"],
-      impact: "Increased content production efficiency by 5x for marketing teams",
-      futurePlans: ["Integration with major CMS platforms", "Multilingual support"]
-    },
-    {
-      name: "Virtual Event Platform",
-      description: "A robust solution for hosting and managing online events and conferences",
-      image: "https://ik.imagekit.io/webshack/virtual-event.jpg?updatedAt=1684788689715",
-      icon: <Users className="w-6 h-6 mr-2" />,
-      features: ["Live streaming", "Interactive workshops", "Networking tools"],
-      impact: "Enabled successful hosting of events with over 10,000 attendees",
-      futurePlans: ["VR integration for immersive experiences", "AI-powered matchmaking"]
-    }
-  ]
-}
-
-function getTestimonials(): Testimonial[] {
-  return [
-    {
-      name: "Sarah Johnson",
-      position: "CEO, TechInnovate",
-      quote: "WebShack transformed our online presence. Their innovative solutions and attention to detail are unmatched.",
-      avatar: "https://ik.imagekit.io/webshack/avatar-1.jpg?updatedAt=1684788689410",
-      rating: 5
-    },
-    {
-      name: "Michael Chen",
-      position: "Founder, GreenEco",
-      quote: "The team at WebShack brought our vision to life. Their expertise in sustainable tech solutions is impressive.",
-      avatar: "https://ik.imagekit.io/webshack/avatar-2.jpg?updatedAt=1684788689422",
-      rating: 5
-    },
-    {
-      name: "Emily Rodriguez",
-      position: "Marketing Director, FitLife",
-      quote: "Working with WebShack was a game-changer for our fitness app. They delivered beyond our expectations.",
-      avatar: "https://ik.imagekit.io/webshack/avatar-3.jpg?updatedAt=1684788689435",
-      rating: 5
-    }
-  ]
-}

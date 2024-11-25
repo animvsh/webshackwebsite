@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
@@ -13,50 +13,93 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
-import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, Code, ArrowRight, Menu, X } from 'lucide-react'
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, ArrowRight, Menu, X } from 'lucide-react'
 
-const GradientElephantLogo = () => (
-  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    🐘 WebShack
-  </span>
-)
+interface DynamicHeaderProps {
+  logo: React.ReactNode;
+}
 
-const DynamicHeader = ({ logo }: { logo: React.ReactNode }) => {
+function DynamicHeader({ logo }: DynamicHeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Blog', href: '/blog' },
+  ]
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-lg border-b border-white/10">
-      <div className="container flex h-16 items-center">
-        <Link className="mr-6 flex items-center space-x-2" href="/">
+    <motion.header 
+      className={`sticky top-0 z-50 backdrop-blur-md border-b border-gray-800 transition-all duration-300 ${
+        isScrolled ? 'bg-gray-900/90' : 'bg-transparent'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold text-white flex items-center">
           {logo}
         </Link>
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/projects">Projects</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/services">Services</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/about">About</Link>
-          <Link className="text-white hover:text-blue-400 transition-colors" href="/contact">Contact</Link>
-        </nav>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" className="px-0 text-white md:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] bg-black/90 text-white">
-            <nav className="flex flex-col space-y-4 mt-6">
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/projects">Projects</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/services">Services</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/about">About</Link>
-              <Link className="text-white hover:text-blue-400 transition-colors" href="/contact">Contact</Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+        <div className="hidden md:flex space-x-6">
+          {navItems.map((item) => (
+            <Link 
+              key={item.name} 
+              href={item.href}
+              className="text-gray-300 hover:text-white transition-colors duration-300"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        <Button className="md:hidden" variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <Menu className="h-6 w-6" />
+        </Button>
+      </nav>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-gray-800 overflow-hidden"
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="block py-2 px-4 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-300"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 }
+
+const GradientLogo = () => (
+  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 flex items-center">
+    <span className="mr-2">🐘</span>
+    WebShack
+  </span>
+)
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
@@ -72,7 +115,7 @@ export default function Projects() {
           <div className="absolute bottom-0 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-6000"></div>
         </div>
       </div>
-      <DynamicHeader logo={<GradientElephantLogo />} />
+      <DynamicHeader logo={<GradientLogo />} />
       <main className="container mx-auto px-4 py-20">
         <h1 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
           Our Innovative Projects
@@ -298,7 +341,7 @@ function getProjects(): Project[] {
         'Career Integration',
         'Peer Comparisons',
         'Alert System',
-        'Parent/Advisor Access'
+        'Parent/Advisor Access',
       ],
       impact: 'By reducing the stress of academic planning, Condoit AI helps students focus on learning and career preparation.',
       futurePlans: [
@@ -347,3 +390,4 @@ function getProjects(): Project[] {
     }
   ]
 }
+

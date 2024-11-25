@@ -26,8 +26,9 @@ export default function DynamicHeader({ logo }: DynamicHeaderProps) {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Projects', href: '/projects' },
-    { name: 'Blog', href: '/blog' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Blog', href: '/blog' },
   ]
 
   return (
