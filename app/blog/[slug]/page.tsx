@@ -1,16 +1,16 @@
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from 'lucide-react'
-import DynamicHeader from '@/components/DynamicHeader'
-import { blogPosts } from '@/lib/blogPosts'
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import DynamicHeader from '@/components/DynamicHeader';
+import { blogPosts } from '@/lib/blogPosts';
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find(p => p.slug === params.slug)
+  const post = blogPosts.find(p => p.slug === params.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -52,11 +52,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         </article>
       </main>
     </div>
-  )
+  );
 }
 
 export async function generateStaticParams() {
   return blogPosts.map((post) => ({
     slug: post.slug,
-  }))
+  }));
 }

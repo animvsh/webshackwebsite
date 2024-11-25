@@ -4,7 +4,7 @@ export interface Service {
     description: string;
   }
   
-  export interface Project {
+export interface Project {
     name: string;
     icon: React.ReactNode;
     image: string;
@@ -14,7 +14,7 @@ export interface Service {
     futurePlans: string[];
   }
   
-  export interface Testimonial {
+export interface Testimonial {
     name: string;
     position: string;
     avatar: string;

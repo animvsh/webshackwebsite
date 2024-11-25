@@ -1,37 +1,37 @@
-'use client'
+'use client';
 
-import { useState, useRef, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, ArrowRight, Menu, X } from 'lucide-react'
+} from '@/components/ui/dialog';
+import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, ArrowRight, Menu, X } from 'lucide-react';
 
 interface DynamicHeaderProps {
   logo: React.ReactNode;
 }
 
 function DynamicHeader({ logo }: DynamicHeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -39,7 +39,7 @@ function DynamicHeader({ logo }: DynamicHeaderProps) {
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Blog', href: '/blog' },
-  ]
+  ];
 
   return (
     <motion.header 
@@ -91,7 +91,7 @@ function DynamicHeader({ logo }: DynamicHeaderProps) {
         )}
       </AnimatePresence>
     </motion.header>
-  )
+  );
 }
 
 const GradientLogo = () => (
@@ -99,11 +99,11 @@ const GradientLogo = () => (
     <span className="mr-2">🐘</span>
     WebShack
   </span>
-)
+);
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const projects = getProjects()
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const projects = getProjects();
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -133,12 +133,12 @@ export default function Projects() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
 function ProjectCard({ project, setSelectedProject, index }: { project: Project; setSelectedProject: (project: Project) => void; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true })
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
 
   return (
     <motion.div
@@ -184,7 +184,7 @@ function ProjectCard({ project, setSelectedProject, index }: { project: Project;
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
 
 function ProjectDialog({ project, onClose }: { project: Project; onClose: () => void }) {
@@ -258,7 +258,7 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
         </motion.div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 interface Project {
@@ -388,6 +388,6 @@ function getProjects(): Project[] {
         'Implement IoT integration for smart campus features'
       ]
     }
-  ]
+  ];
 }
 

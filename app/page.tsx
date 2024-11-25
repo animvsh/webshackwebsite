@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { ArrowRight, Code, Search, Sliders, ShoppingCart, Palette, PenToolIcon as Tool, Mail, Phone, MapPin, ChevronDown, Check, Star, Users, Zap, Shield } from 'lucide-react'
-import DynamicHeader from '@/components/DynamicHeader'
-import { Carousel } from "@/components/ui/carousel"
-import { blogPosts } from '@/lib/blogPosts'
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { ArrowRight, Code, Search, Sliders, ShoppingCart, Palette, PenToolIcon as Tool, Mail, Phone, MapPin, ChevronDown, Check, Star, Users, Zap, Shield } from 'lucide-react';
+import DynamicHeader from '@/components/DynamicHeader';
+import { Carousel } from '@/components/ui/carousel';
+import { blogPosts } from '@/lib/blogPosts';
 
 type Service = {
   title: string;
@@ -31,127 +31,127 @@ type Project = {
 
 const services: Service[] = [
   {
-    title: "Web Design & Development",
+    title: 'Web Design & Development',
     description: "Create stunning and functional websites that reflect your brand's identity.",
     icon: <Palette className="w-6 h-6 text-blue-400" />,
-    features: ["Responsive design", "User-friendly layouts", "SEO-friendly structures", "Hosting setup"],
+    features: ['Responsive design', 'User-friendly layouts', 'SEO-friendly structures', 'Hosting setup'],
   },
   {
-    title: "E-Commerce Solutions",
-    description: "Build powerful online stores to boost your sales and reach.",
+    title: 'E-Commerce Solutions',
+    description: 'Build powerful online stores to boost your sales and reach.',
     icon: <ShoppingCart className="w-6 h-6 text-green-400" />,
-    features: ["Beautiful product pages", "Secure payment integration", "Cart recovery", "Product recommendations"],
+    features: ['Beautiful product pages', 'Secure payment integration', 'Cart recovery', 'Product recommendations'],
   },
   {
-    title: "Full-Stack Applications",
-    description: "Develop custom applications to solve your unique business challenges.",
+    title: 'Full-Stack Applications',
+    description: 'Develop custom applications to solve your unique business challenges.',
     icon: <Code className="w-6 h-6 text-purple-400" />,
-    features: ["End-to-end development", "Scalable architecture", "Real-time features", "API integration"],
+    features: ['End-to-end development', 'Scalable architecture', 'Real-time features', 'API integration'],
   },
   {
-    title: "SEO & Digital Marketing",
-    description: "Boost your online presence and reach your target audience effectively.",
+    title: 'SEO & Digital Marketing',
+    description: 'Boost your online presence and reach your target audience effectively.',
     icon: <Search className="w-6 h-6 text-yellow-400" />,
-    features: ["SEO optimization", "Analytics setup", "Content strategy", "Social media campaigns"],
+    features: ['SEO optimization', 'Analytics setup', 'Content strategy', 'Social media campaigns'],
   },
   {
-    title: "Maintenance & Support",
-    description: "Keep your digital assets secure, updated, and performing optimally.",
+    title: 'Maintenance & Support',
+    description: 'Keep your digital assets secure, updated, and performing optimally.',
     icon: <Tool className="w-6 h-6 text-red-400" />,
-    features: ["Regular updates", "Security monitoring", "Performance optimization", "24/7 support"],
+    features: ['Regular updates', 'Security monitoring', 'Performance optimization', '24/7 support'],
   },
-]
+];
 
 const GradientLogo = () => (
   <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 flex items-center">
     <span className="mr-2">🐘</span>
     WebShack
   </span>
-)
+);
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "ClassMate",
-    image: "/placeholder.svg",
-    description: "A Chrome extension for enhanced classroom collaboration.",
+    title: 'ClassMate',
+    image: '/placeholder.svg',
+    description: 'A Chrome extension for enhanced classroom collaboration.',
     fullDescription:
-      "ClassMate is a Chrome extension built to enhance classroom collaboration, focusing on group projects and peer learning. It integrates with learning platforms like Canvas, making it easier for students and instructors to stay connected.",
-    technologies: ["JavaScript", "Chrome Extension API", "Canvas LMS API", "AI"],
-    link: "https://example.com/classmate",
+      'ClassMate is a Chrome extension built to enhance classroom collaboration, focusing on group projects and peer learning. It integrates with learning platforms like Canvas, making it easier for students and instructors to stay connected.',
+    technologies: ['JavaScript', 'Chrome Extension API', 'Canvas LMS API', 'AI'],
+    link: 'https://example.com/classmate',
   },
   {
     id: 2,
-    title: "EcoTrack",
-    image: "/placeholder.svg",
-    description: "Mobile app for tracking and reducing carbon footprint.",
+    title: 'EcoTrack',
+    image: '/placeholder.svg',
+    description: 'Mobile app for tracking and reducing carbon footprint.',
     fullDescription:
-      "EcoTrack is a mobile application designed to help users track and reduce their carbon footprint. It provides personalized recommendations, challenges, and rewards to encourage sustainable living practices.",
-    technologies: ["React Native", "Node.js", "MongoDB", "Machine Learning"],
-    link: "https://example.com/ecotrack",
+      'EcoTrack is a mobile application designed to help users track and reduce their carbon footprint. It provides personalized recommendations, challenges, and rewards to encourage sustainable living practices.',
+    technologies: ['React Native', 'Node.js', 'MongoDB', 'Machine Learning'],
+    link: 'https://example.com/ecotrack',
   },
   {
     id: 3,
-    title: "HealthHub",
-    image: "/placeholder.svg",
-    description: "Centralized platform for managing health records and appointments.",
+    title: 'HealthHub',
+    image: '/placeholder.svg',
+    description: 'Centralized platform for managing health records and appointments.',
     fullDescription:
-      "HealthHub is a comprehensive health management platform that allows users to store and access their medical records, schedule appointments, and receive personalized health insights. It integrates with various healthcare providers to ensure seamless data flow.",
-    technologies: ["React", "Express.js", "PostgreSQL", "HL7 FHIR"],
-    link: "https://example.com/healthhub",
+      'HealthHub is a comprehensive health management platform that allows users to store and access their medical records, schedule appointments, and receive personalized health insights. It integrates with various healthcare providers to ensure seamless data flow.',
+    technologies: ['React', 'Express.js', 'PostgreSQL', 'HL7 FHIR'],
+    link: 'https://example.com/healthhub',
   },
 ];
 
 const plans = [
   {
-    name: "Static Websites",
-    price: "$200 - $400",
-    description: "For simple, professional websites tailored to your brand.",
+    name: 'Static Websites',
+    price: '$200 - $400',
+    description: 'For simple, professional websites tailored to your brand.',
     features: [
-      "Custom design",
-      "Responsive layout",
-      "Basic SEO optimization",
-      "Contact form integration",
+      'Custom design',
+      'Responsive layout',
+      'Basic SEO optimization',
+      'Contact form integration',
     ],
   },
   {
-    name: "Dynamic Websites",
-    price: "Starting at $400",
-    description: "Includes interactive features, CMS integration, and more.",
+    name: 'Dynamic Websites',
+    price: 'Starting at $400',
+    description: 'Includes interactive features, CMS integration, and more.',
     features: [
-      "All Static Website features",
-      "Content Management System",
-      "Dynamic content",
-      "User authentication",
+      'All Static Website features',
+      'Content Management System',
+      'Dynamic content',
+      'User authentication',
     ],
   },
   {
-    name: "E-Commerce Solutions",
-    price: "Starting at $500",
-    description: "Complete online store setup with advanced features.",
+    name: 'E-Commerce Solutions',
+    price: 'Starting at $500',
+    description: 'Complete online store setup with advanced features.',
     features: [
-      "All Dynamic Website features",
-      "Product catalog",
-      "Shopping cart",
-      "Secure payment integration",
+      'All Dynamic Website features',
+      'Product catalog',
+      'Shopping cart',
+      'Secure payment integration',
     ],
   },
-]
+];
 
 const testimonials = [
-  { id: 1, name: "Sarah J.", role: "E-Commerce Entrepreneur", content: "WebShack transformed our online presence. Our website not only looks amazing but has also doubled our traffic!" },
-  { id: 2, name: "David K.", role: "Small Business Owner", content: "Fast, professional, and creative! WebShack delivered beyond our expectations. Highly recommend." },
-  { id: 3, name: "Emily R.", role: "Marketing Director", content: "The team at WebShack brought our vision to life. They're true partners in our success." },
+  { id: 1, name: 'Sarah J.', role: 'E-Commerce Entrepreneur', content: 'WebShack transformed our online presence. Our website not only looks amazing but has also doubled our traffic!' },
+  { id: 2, name: 'David K.', role: 'Small Business Owner', content: 'Fast, professional, and creative! WebShack delivered beyond our expectations. Highly recommend.' },
+  { id: 3, name: 'Emily R.', role: 'Marketing Director', content: "The team at WebShack brought our vision to life. They're true partners in our success." },
 ];
 
 const steps = [
-  { title: "Initial Consultation", description: "We start by understanding your business, goals, and vision.", icon: <Users className="w-6 h-6 text-blue-400" /> },
-  { title: "Strategy & Planning", description: "We craft a clear plan for your website or application.", icon: <Sliders className="w-6 h-6 text-green-400" /> },
-  { title: "Design", description: "Our team designs a visually stunning and user-friendly interface.", icon: <Palette className="w-6 h-6 text-purple-400" /> },
-  { title: "Development", description: "We bring your vision to life with clean, efficient code.", icon: <Code className="w-6 h-6 text-yellow-400" /> },
-  { title: "Testing & Launch", description: "We thoroughly test every aspect before going live.", icon: <Zap className="w-6 h-6 text-red-400" /> },
-  { title: "Post-Launch Support", description: "We provide ongoing maintenance and support.", icon: <Shield className="w-6 h-6 text-indigo-400" /> },
-]
+  { title: 'Initial Consultation', description: 'We start by understanding your business, goals, and vision.', icon: <Users className="w-6 h-6 text-blue-400" /> },
+  { title: 'Strategy & Planning', description: 'We craft a clear plan for your website or application.', icon: <Sliders className="w-6 h-6 text-green-400" /> },
+  { title: 'Design', description: 'Our team designs a visually stunning and user-friendly interface.', icon: <Palette className="w-6 h-6 text-purple-400" /> },
+  { title: 'Development', description: 'We bring your vision to life with clean, efficient code.', icon: <Code className="w-6 h-6 text-yellow-400" /> },
+  { title: 'Testing & Launch', description: 'We thoroughly test every aspect before going live.', icon: <Zap className="w-6 h-6 text-red-400" /> },
+  { title: 'Post-Launch Support', description: 'We provide ongoing maintenance and support.', icon: <Shield className="w-6 h-6 text-indigo-400" /> },
+];
 
 export default function Home() {
   return (
@@ -181,7 +181,7 @@ export default function Home() {
 
       <Footer />
     </div>
-  )
+  );
 }
 
 function HeroSection() {
@@ -202,7 +202,7 @@ function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function ServicesSection({ services }: { services: Service[] }) {
@@ -239,7 +239,7 @@ function ServicesSection({ services }: { services: Service[] }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function ProjectSection({ projects }: { projects: Project[] }) {
@@ -252,7 +252,7 @@ function ProjectSection({ projects }: { projects: Project[] }) {
         <Carousel projects={projects} className="w-full max-w-4xl mx-auto" />
       </div>
     </section>
-  )
+  );
 }
 
 function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
@@ -282,7 +282,7 @@ function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function ProcessSection({ steps }: { steps: any[] }) {
@@ -313,7 +313,7 @@ function ProcessSection({ steps }: { steps: any[] }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function PricingSection({ plans }: { plans: any[] }) {
@@ -353,7 +353,7 @@ function PricingSection({ plans }: { plans: any[] }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function BlogSection() {
@@ -368,7 +368,7 @@ function BlogSection() {
             <Link href={`/blog/${post.slug}`} key={index}>
               <Card className="bg-gray-800 border-none overflow-hidden h-full transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl group">
                 <Image
-                  src={post.image || "/placeholder.svg"}
+                  src={post.image || '/placeholder.svg'}
                   alt={post.title}
                   width={400}
                   height={200}
@@ -392,7 +392,7 @@ function BlogSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function AboutSection() {
@@ -424,7 +424,7 @@ function AboutSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function ContactSection() {
@@ -459,7 +459,7 @@ function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function Footer() {
@@ -469,6 +469,6 @@ function Footer() {
         <p className="hover:text-white transition-colors duration-300">© {new Date().getFullYear()} WebShack. All rights reserved.</p>
       </div>
     </footer>
-  )
+  );
 }
 

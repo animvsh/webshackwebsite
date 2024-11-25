@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail } from 'lucide-react'
-import DynamicHeader from '@/components/DynamicHeader'
-import AnimatedBackground from '@/components/ui/AnimatedBackground'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail } from 'lucide-react';
+import DynamicHeader from '@/components/DynamicHeader';
+import AnimatedBackground from '@/components/ui/AnimatedBackground';
 
 const GradientElephantLogo = () => (
   <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
     🐘 WebShack
   </span>
-)
+);
 
 export default function Contact() {
   return (
@@ -44,6 +44,6 @@ export default function Contact() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 

@@ -1,14 +1,14 @@
-import { Brain, Zap, Smartphone, Shield, Users, Wifi } from 'lucide-react'
+import { Brain, Zap, Smartphone, Shield, Users, Wifi } from 'lucide-react';
 
 export const blogPosts = [
   {
-    slug: "future-of-ai-in-web-development",
-    title: "The Future of AI in Web Development",
-    author: "Animesh Alang",
-    date: "March 15, 2024",
+    slug: 'future-of-ai-in-web-development',
+    title: 'The Future of AI in Web Development',
+    author: 'Animesh Alang',
+    date: 'March 15, 2024',
     icon: Brain,
-    excerpt: "Explore how AI is revolutionizing web development, from automated coding to intelligent user experiences.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Explore how AI is revolutionizing web development, from automated coding to intelligent user experiences.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Artificial Intelligence (AI) is rapidly transforming the landscape of web development. From automated code generation to personalized user experiences, AI is reshaping how we build and interact with websites and web applications.
 
@@ -36,13 +36,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "optimizing-website-for-core-web-vitals",
-    title: "Optimizing Your Website for Core Web Vitals",
-    author: "Adithya Pradeep",
-    date: "March 10, 2024",
+    slug: 'optimizing-website-for-core-web-vitals',
+    title: 'Optimizing Your Website for Core Web Vitals',
+    author: 'Adithya Pradeep',
+    date: 'March 10, 2024',
     icon: Zap,
     excerpt: "Learn essential strategies to improve your website's performance and boost your search engine rankings.",
-    image: "/placeholder.svg?height=400&width=800",
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Core Web Vitals have become a crucial factor in search engine rankings and user experience. Google's emphasis on these metrics means that optimizing them is no longer optional but essential. In this in-depth guide, we'll dive deep into what Core Web Vitals are and how you can optimize your website to meet and exceed these important metrics.
 
@@ -90,13 +90,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "embracing-mobile-first-design",
-    title: "Embracing Mobile-First Design in 2024",
-    author: "Neel Billimoria",
-    date: "March 8, 2024",
+    slug: 'embracing-mobile-first-design',
+    title: 'Embracing Mobile-First Design in 2024',
+    author: 'Neel Billimoria',
+    date: 'March 8, 2024',
     icon: Smartphone,
-    excerpt: "Discover why mobile-first design is no longer optional and how to implement it effectively.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Discover why mobile-first design is no longer optional and how to implement it effectively.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       With the majority of global web traffic coming from mobile devices, adopting a mobile-first design approach is imperative. In this extensive article, we'll discuss the principles of mobile-first design and provide practical tips for creating responsive, user-friendly websites that perform well on any device.
 
@@ -143,13 +143,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "enhancing-web-security-with-modern-practices",
-    title: "Enhancing Web Security with Modern Practices",
-    author: "Aneel Singh Jon",
-    date: "March 5, 2024",
+    slug: 'enhancing-web-security-with-modern-practices',
+    title: 'Enhancing Web Security with Modern Practices',
+    author: 'Aneel Singh Jon',
+    date: 'March 5, 2024',
     icon: Shield,
-    excerpt: "Learn about the latest web security threats and how to protect your website from vulnerabilities.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Learn about the latest web security threats and how to protect your website from vulnerabilities.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       As cyber threats evolve, it's essential to stay informed about the latest security practices in web development. This comprehensive guide covers modern techniques to safeguard your website against common vulnerabilities and emerging threats.
 
@@ -197,13 +197,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "the-rise-of-progressive-web-apps",
-    title: "The Rise of Progressive Web Apps (PWAs)",
-    author: "Nitin Chandranath",
-    date: "March 2, 2024",
+    slug: 'the-rise-of-progressive-web-apps',
+    title: 'The Rise of Progressive Web Apps (PWAs)',
+    author: 'Nitin Chandranath',
+    date: 'March 2, 2024',
     icon: Wifi,
-    excerpt: "Understand how PWAs are bridging the gap between web and mobile apps, offering enhanced user experiences.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Understand how PWAs are bridging the gap between web and mobile apps, offering enhanced user experiences.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Progressive Web Apps (PWAs) are transforming the way users interact with web content by combining the best features of web and mobile applications. In this detailed article, we'll delve into what PWAs are and how they can benefit both developers and users.
 
@@ -251,13 +251,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "accessibility-in-web-design",
-    title: "Prioritizing Accessibility in Web Design",
-    author: "Paras Gandhi",
-    date: "February 28, 2024",
+    slug: 'accessibility-in-web-design',
+    title: 'Prioritizing Accessibility in Web Design',
+    author: 'Paras Gandhi',
+    date: 'February 28, 2024',
     icon: Users,
-    excerpt: "Learn how to make your website accessible to all users, including those with disabilities.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Learn how to make your website accessible to all users, including those with disabilities.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Web accessibility ensures that all users, regardless of abilities, can access and use your website effectively. This article discusses the importance of accessibility and provides guidelines for implementing inclusive design practices.
 
@@ -310,13 +310,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "impact-of-5g-on-web-applications",
-    title: "The Impact of 5G on Web Applications",
-    author: "Animesh Alang",
-    date: "February 25, 2024",
+    slug: 'impact-of-5g-on-web-applications',
+    title: 'The Impact of 5G on Web Applications',
+    author: 'Animesh Alang',
+    date: 'February 25, 2024',
     icon: Wifi,
-    excerpt: "Explore how 5G technology is transforming web application development and user experiences.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Explore how 5G technology is transforming web application development and user experiences.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       The rollout of 5G networks promises faster speeds and lower latency, which opens up new possibilities for web applications. In this article, we'll examine how 5G is influencing web development and what it means for developers.
 
@@ -361,13 +361,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "cloud-computing-in-web-development",
-    title: "Leveraging Cloud Computing in Web Development",
-    author: "Neel Billimoria",
-    date: "February 20, 2024",
+    slug: 'cloud-computing-in-web-development',
+    title: 'Leveraging Cloud Computing in Web Development',
+    author: 'Neel Billimoria',
+    date: 'February 20, 2024',
     icon: Brain,
-    excerpt: "Discover how cloud services are transforming web development and deployment processes.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Discover how cloud services are transforming web development and deployment processes.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Cloud computing has become integral to modern web development, offering scalability, flexibility, and cost savings. This article explores how developers can harness cloud services to enhance their web applications.
 
@@ -417,13 +417,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "machine-learning-in-web-applications",
-    title: "Integrating Machine Learning into Web Applications",
-    author: "Adithya Pradeep",
-    date: "February 18, 2024",
+    slug: 'machine-learning-in-web-applications',
+    title: 'Integrating Machine Learning into Web Applications',
+    author: 'Adithya Pradeep',
+    date: 'February 18, 2024',
     icon: Brain,
-    excerpt: "Learn how to implement machine learning features in your web applications to enhance functionality.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Learn how to implement machine learning features in your web applications to enhance functionality.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Machine learning enables web applications to provide intelligent features such as personalization, recommendations, and predictive analytics. This article guides you through integrating machine learning into your web projects.
 
@@ -472,13 +472,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "importance-of-apis-in-modern-web-development",
-    title: "The Importance of APIs in Modern Web Development",
-    author: "Nitin Chandranath",
-    date: "February 15, 2024",
+    slug: 'importance-of-apis-in-modern-web-development',
+    title: 'The Importance of APIs in Modern Web Development',
+    author: 'Nitin Chandranath',
+    date: 'February 15, 2024',
     icon: Zap,
-    excerpt: "Understand how APIs enable connectivity and functionality in web applications.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Understand how APIs enable connectivity and functionality in web applications.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       APIs (Application Programming Interfaces) are the backbone of modern web applications, allowing different services to communicate seamlessly. In this article, we'll explore how APIs work and their role in web development.
 
@@ -531,13 +531,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "responsive-design-best-practices",
-    title: "Responsive Design Best Practices in 2024",
-    author: "Paras Gandhi",
-    date: "February 12, 2024",
+    slug: 'responsive-design-best-practices',
+    title: 'Responsive Design Best Practices in 2024',
+    author: 'Paras Gandhi',
+    date: 'February 12, 2024',
     icon: Smartphone,
-    excerpt: "Stay up-to-date with the latest techniques for creating responsive and adaptive web designs.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Stay up-to-date with the latest techniques for creating responsive and adaptive web designs.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Responsive design is critical for ensuring that your website looks and functions well on all devices. This article highlights the latest best practices in responsive web design to help you create seamless user experiences.
 
@@ -584,13 +584,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "future-of-javascript-frameworks",
-    title: "The Future of JavaScript Frameworks",
-    author: "Aneel Singh Jon",
-    date: "February 10, 2024",
+    slug: 'future-of-javascript-frameworks',
+    title: 'The Future of JavaScript Frameworks',
+    author: 'Aneel Singh Jon',
+    date: 'February 10, 2024',
     icon: Brain,
-    excerpt: "Explore the evolving landscape of JavaScript frameworks and what it means for developers.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Explore the evolving landscape of JavaScript frameworks and what it means for developers.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       JavaScript frameworks continue to evolve rapidly, offering new features and paradigms. In this article, we'll examine the current state of popular frameworks and predict future trends that will shape web development.
 
@@ -632,13 +632,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "blockchain-in-web-development",
-    title: "Blockchain Technology in Web Development",
-    author: "Nitin Chandranath",
-    date: "February 8, 2024",
+    slug: 'blockchain-in-web-development',
+    title: 'Blockchain Technology in Web Development',
+    author: 'Nitin Chandranath',
+    date: 'February 8, 2024',
     icon: Shield,
-    excerpt: "Learn how blockchain is influencing web development and the potential applications.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Learn how blockchain is influencing web development and the potential applications.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       Blockchain technology offers decentralized solutions for various web applications. This article explores how blockchain is being integrated into web development and its potential benefits.
 
@@ -681,13 +681,13 @@ export const blogPosts = [
     `
   },
   {
-    slug: "web-development-best-practices-2024",
-    title: "Web Development Best Practices in 2024",
-    author: "Paras Gandhi",
-    date: "February 5, 2024",
+    slug: 'web-development-best-practices-2024',
+    title: 'Web Development Best Practices in 2024',
+    author: 'Paras Gandhi',
+    date: 'February 5, 2024',
     icon: Zap,
-    excerpt: "Stay ahead with the latest best practices for efficient and effective web development.",
-    image: "/placeholder.svg?height=400&width=800",
+    excerpt: 'Stay ahead with the latest best practices for efficient and effective web development.',
+    image: '/placeholder.svg?height=400&width=800',
     content: `
       As web technologies evolve, so do the best practices that guide developers. This article outlines the most important practices to follow in 2024 to ensure your web projects are successful.
 
@@ -733,4 +733,4 @@ export const blogPosts = [
     `
   },
   // Add more blog posts here...
-]
+];

@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Code, Users, Zap, Shield, Smartphone, BotIcon as Robot, Cog, BarChart } from 'lucide-react'
-import DynamicHeader from '@/components/DynamicHeader'
+import { useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Code, Users, Zap, Shield, Smartphone, BotIcon as Robot, Cog, BarChart } from 'lucide-react';
+import DynamicHeader from '@/components/DynamicHeader';
 
 export default function About() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
@@ -24,7 +24,7 @@ export default function About() {
             transition={{ 
               duration: 10, 
               repeat: Infinity,
-              repeatType: "reverse" 
+              repeatType: 'reverse' 
             }}
           />
           <motion.div 
@@ -36,7 +36,7 @@ export default function About() {
             transition={{ 
               duration: 12, 
               repeat: Infinity,
-              repeatType: "reverse" 
+              repeatType: 'reverse' 
             }}
           />
           <motion.div 
@@ -48,7 +48,7 @@ export default function About() {
             transition={{ 
               duration: 8, 
               repeat: Infinity,
-              repeatType: "reverse" 
+              repeatType: 'reverse' 
             }}
           />
         </div>
@@ -96,7 +96,7 @@ export default function About() {
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
               >
                 <Card className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg border-purple-500 border-opacity-50 hover:bg-opacity-70 transition-all duration-300">
                   <CardHeader>
@@ -149,7 +149,7 @@ export default function About() {
         </motion.section>
       </main>
     </div>
-  )
+  );
 }
 
 function getServices() {
@@ -184,7 +184,7 @@ function getServices() {
       title: 'Data Analytics',
       description: 'Turn your data into actionable insights with our analytics solutions.'
     }
-  ]
+  ];
 }
 
 function getReasons() {
@@ -209,6 +209,6 @@ function getReasons() {
       title: 'Client-Centric Approach',
       description: 'We prioritize your needs and vision, working closely with you throughout the development process.'
     }
-  ]
+  ];
 }
 
