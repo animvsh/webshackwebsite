@@ -2,15 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Import Image
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 
-interface DynamicHeaderProps {
-  logo: React.ReactNode;
-}
-
-export default function DynamicHeader({ logo }: DynamicHeaderProps) {
+export default function DynamicHeader() { // Removed logo prop
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -41,8 +38,18 @@ export default function DynamicHeader({ logo }: DynamicHeaderProps) {
       transition={{ duration: 0.3 }}
     >
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-white flex items-center">
-          {logo}
+        <Link href="/" className="flex items-center">
+          {/* Replaced {logo} with Image component and added gradient text */}
+          <Image 
+            src="/logo.png" 
+            alt="WebShack Logo" 
+            width={60} // Increased width
+            height={60} // Increased height
+            className="mr-3" // Adjusted margin
+          />
+          <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            Webshack
+          </span>
         </Link>
         <div className="hidden md:flex space-x-6">
           {navItems.map((item) => (
@@ -55,7 +62,12 @@ export default function DynamicHeader({ logo }: DynamicHeaderProps) {
             </Link>
           ))}
         </div>
-        <Button className="md:hidden" variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <Button 
+          className="md:hidden" 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
           <Menu className="h-6 w-6" />
         </Button>
       </nav>

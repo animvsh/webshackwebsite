@@ -14,90 +14,151 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, ArrowRight, Menu, X } from 'lucide-react';
+import { Users, Heart, Calendar, Brain, Lightbulb, Rocket, ArrowRight, X } from 'lucide-react';
+import DynamicHeader from '@/components/DynamicHeader';
 
-interface DynamicHeaderProps {
-  logo: React.ReactNode;
+interface Project {
+  name: string;
+  icon: JSX.Element;
+  image: string;
+  description: string;
+  technologies: string[];
+  features: string[];
+  impact: string;
+  futurePlans: string[];
 }
 
-function DynamicHeader({ logo }: DynamicHeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Blog', href: '/blog' },
+function getProjects(): Project[] {
+  return [
+    {
+      name: 'ClassMate',
+      icon: <Users className="text-blue-400" />,
+      image: '/ClassMate.png',
+      description: 'A Chrome extension for student collaboration on Canvas.',
+      technologies: ['JavaScript', 'React', 'Chrome API'],
+      features: [
+        'Integration with Canvas',
+        'Smart Notifications',
+        'Customizable Settings',
+        'Analytics Dashboard'
+      ],
+      impact: 'ClassMate empowers students to take ownership of their learning while enabling instructors to foster a more interactive classroom environment.',
+      futurePlans: [
+        'Offer premium analytics',
+        'Expand to other learning platforms',
+        'Implement AI-driven study recommendations'
+      ]
+    },
+    {
+      name: 'Rizzy',
+      icon: <Heart className="text-pink-400" />,
+      image: '/Rizzy.png',
+      description: 'An innovative blind dating app with unique features.',
+      technologies: ['React Native', 'Node.js', 'MongoDB'],
+      features: [
+        'Match History',
+        'Event-Based Matching',
+        'Icebreaker Questions',
+        'Relationship Insights'
+      ],
+      impact: 'By gamifying dating and removing superficial biases, Rizzy focuses on compatibility and fun, making it a standout choice for users seeking genuine relationships.',
+      futurePlans: [
+        'Launch partnership programs with local venues',
+        'Introduce long-term relationship-building tools',
+        'Implement AI-powered compatibility matching'
+      ]
+    },
+    {
+      name: 'Soshal',
+      icon: <Calendar className="text-green-400" />,
+      image: '/Soshal.png',
+      description: 'A platform for community connections and event planning.',
+      technologies: ['Vue.js', 'Express', 'PostgreSQL'],
+      features: [
+        'Interest-Based Matching',
+        'Event Broadcasting',
+        'Monetization for Event Organizers',
+        'Moderator Tools'
+      ],
+      impact: 'Soshal bridges the gap between online interactions and real-world relationships, empowering groups to collaborate effectively.',
+      futurePlans: [
+        'Develop AI-driven suggestions for group activities',
+        'Partner with corporations for internal team-building solutions',
+        'Expand to global markets with localization features'
+      ]
+    },
+    {
+      name: 'Condoit AI',
+      icon: <Brain className="text-purple-400" />,
+      image: '/placeholder.svg?height=200&width=400', // Image remains unchanged
+      description: 'AI-powered 4-year planner for academic success.',
+      technologies: ['Python', 'TensorFlow', 'Flask'],
+      features: [
+        'Career Integration',
+        'Peer Comparisons',
+        'Alert System',
+        'Parent/Advisor Access',
+      ],
+      impact: 'By reducing the stress of academic planning, Condoit AI helps students focus on learning and career preparation.',
+      futurePlans: [
+        'Add internship and job placement tracker',
+        'Introduce scholarships suggestions',
+        'Implement machine learning for personalized study plans'
+      ]
+    },
+    {
+      name: 'Slug AI',
+      icon: <Lightbulb className="text-yellow-400" />,
+      image: '/SlugAI.png',
+      description: "UCSC's AI innovation initiative and hackathon platform.",
+      technologies: ['Next.js', 'GraphQL', 'AWS'],
+      features: [
+        'AI Sandbox',
+        'Partnership Program',
+        'Open-Source Repository',
+        'AI Competitions'
+      ],
+      impact: 'Establish UCSC as a leader in AI innovation and build a network of alumni and industry professionals to drive future collaborations.',
+      futurePlans: [
+        'Expand to other universities',
+        'Create a unified platform for AI education and research',
+        'Launch an AI startup incubator program'
+      ]
+    },
+    {
+      name: 'SlugSmart',
+      icon: <Rocket className="text-red-400" />,
+      image: '/SlugSmart.png',
+      description: 'Smart campus app for UCSC students.',
+      technologies: ['React', 'Firebase', 'Google Cloud'],
+      features: [
+        'Customizable Dashboard',
+        'AI Advisor',
+        'Campus Navigation',
+        'Energy-Saving Tips'
+      ],
+      impact: 'SlugSmart enhances every aspect of campus life, helping students make the most of their college experience.',
+      futurePlans: [
+        'Partner with campus organizations',
+        'Introduce mental health check-ins and resources',
+        'Implement IoT integration for smart campus features'
+      ]
+    }
   ];
-
-  return (
-    <motion.header 
-      className={`sticky top-0 z-50 backdrop-blur-md border-b border-gray-800 transition-all duration-300 ${
-        isScrolled ? 'bg-gray-900/90' : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-white flex items-center">
-          {logo}
-        </Link>
-        <div className="hidden md:flex space-x-6">
-          {navItems.map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href}
-              className="text-gray-300 hover:text-white transition-colors duration-300"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-        <Button className="md:hidden" variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <Menu className="h-6 w-6" />
-        </Button>
-      </nav>
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-800 overflow-hidden"
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block py-2 px-4 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
-  );
 }
 
-const GradientLogo = () => (
-  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 flex items-center">
-    <span className="mr-2">🐘</span>
-    WebShack
+const GradientLogo: React.FC = () => (
+  <span className="flex items-center">
+    <Image
+      src="/logo.png" 
+      alt="WebShack Logo" 
+      width={60} // Increased width
+      height={60} // Increased height
+      className="mr-3" // Adjusted margin
+    />
+    <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+      WebShack
+    </span>
   </span>
 );
 
@@ -106,7 +167,8 @@ export default function Projects() {
   const projects = getProjects();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Background Blobs */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute -inset-[10px] opacity-50">
           <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
@@ -115,7 +177,10 @@ export default function Projects() {
           <div className="absolute bottom-0 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-6000"></div>
         </div>
       </div>
+      
+      {/* Dynamic Header with Gradient Logo */}
       <DynamicHeader logo={<GradientLogo />} />
+      
       <main className="container mx-auto px-4 py-20">
         <h1 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
           Our Innovative Projects
@@ -123,13 +188,22 @@ export default function Projects() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} setSelectedProject={setSelectedProject} index={index} />
+            <ProjectCard 
+              key={index} 
+              project={project} 
+              setSelectedProject={setSelectedProject} 
+              index={index} 
+            />
           ))}
         </div>
       </main>
+      
       <AnimatePresence>
         {selectedProject && (
-          <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
+          <ProjectDialog 
+            project={selectedProject} 
+            onClose={() => setSelectedProject(null)} 
+          />
         )}
       </AnimatePresence>
     </div>
@@ -152,9 +226,8 @@ function ProjectCard({ project, setSelectedProject, index }: { project: Project;
           <Image
             src={project.image}
             alt={project.name}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 group-hover:scale-110"
+            fill
+            className="transition-transform duration-300 group-hover:scale-110 object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
         </div>
@@ -170,7 +243,11 @@ function ProjectCard({ project, setSelectedProject, index }: { project: Project;
           </CardDescription>
           <div className="flex flex-wrap gap-2 mb-4">
             {project.technologies.map((tech, i) => (
-              <Badge key={i} variant="secondary" className="bg-purple-500 bg-opacity-50 text-white">
+              <Badge 
+                key={i} 
+                variant="secondary" 
+                className="bg-purple-500 bg-opacity-50 text-white"
+              >
                 {tech}
               </Badge>
             ))}
@@ -201,8 +278,8 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
             <Image
               src={project.image}
               alt={project.name}
-              layout="fill"
-              objectFit="cover"
+              fill
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
             <Button
@@ -228,7 +305,10 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
                 <ul className="grid grid-cols-2 gap-2">
                   {project.features.map((feature, index) => (
                     <li key={index} className="flex items-center">
-                      <Badge variant="secondary" className="mr-2">
+                      <Badge 
+                        variant="secondary" 
+                        className="mr-2 flex items-center justify-center"
+                      >
                         <ArrowRight className="w-3 h-3 mr-1" />
                       </Badge>
                       {feature}
@@ -245,7 +325,10 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
                 <ul className="space-y-1 text-gray-300">
                   {project.futurePlans.map((plan, index) => (
                     <li key={index} className="flex items-center">
-                      <Badge variant="outline" className="mr-2">
+                      <Badge 
+                        variant="outline" 
+                        className="mr-2 flex items-center justify-center"
+                      >
                         <ArrowRight className="w-3 h-3 mr-1" />
                       </Badge>
                       {plan}
@@ -260,134 +343,3 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
     </Dialog>
   );
 }
-
-interface Project {
-  name: string;
-  icon: JSX.Element;
-  image: string;
-  description: string;
-  technologies: string[];
-  features: string[];
-  impact: string;
-  futurePlans: string[];
-}
-
-function getProjects(): Project[] {
-  return [
-    {
-      name: 'ClassMate',
-      icon: <Users className="text-blue-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: 'A Chrome extension for student collaboration on Canvas.',
-      technologies: ['JavaScript', 'React', 'Chrome API'],
-      features: [
-        'Integration with Canvas',
-        'Smart Notifications',
-        'Customizable Settings',
-        'Analytics Dashboard'
-      ],
-      impact: 'ClassMate empowers students to take ownership of their learning while enabling instructors to foster a more interactive classroom environment.',
-      futurePlans: [
-        'Offer premium analytics',
-        'Expand to other learning platforms',
-        'Implement AI-driven study recommendations'
-      ]
-    },
-    {
-      name: 'Rizzy',
-      icon: <Heart className="text-pink-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: 'An innovative blind dating app with unique features.',
-      technologies: ['React Native', 'Node.js', 'MongoDB'],
-      features: [
-        'Match History',
-        'Event-Based Matching',
-        'Icebreaker Questions',
-        'Relationship Insights'
-      ],
-      impact: 'By gamifying dating and removing superficial biases, Rizzy focuses on compatibility and fun, making it a standout choice for users seeking genuine relationships.',
-      futurePlans: [
-        'Launch partnership programs with local venues',
-        'Introduce long-term relationship-building tools',
-        'Implement AI-powered compatibility matching'
-      ]
-    },
-    {
-      name: 'Soshal',
-      icon: <Calendar className="text-green-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: 'A platform for community connections and event planning.',
-      technologies: ['Vue.js', 'Express', 'PostgreSQL'],
-      features: [
-        'Interest-Based Matching',
-        'Event Broadcasting',
-        'Monetization for Event Organizers',
-        'Moderator Tools'
-      ],
-      impact: 'Soshal bridges the gap between online interactions and real-world relationships, empowering groups to collaborate effectively.',
-      futurePlans: [
-        'Develop AI-driven suggestions for group activities',
-        'Partner with corporations for internal team-building solutions',
-        'Expand to global markets with localization features'
-      ]
-    },
-    {
-      name: 'Condoit AI',
-      icon: <Brain className="text-purple-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: 'AI-powered 4-year planner for academic success.',
-      technologies: ['Python', 'TensorFlow', 'Flask'],
-      features: [
-        'Career Integration',
-        'Peer Comparisons',
-        'Alert System',
-        'Parent/Advisor Access',
-      ],
-      impact: 'By reducing the stress of academic planning, Condoit AI helps students focus on learning and career preparation.',
-      futurePlans: [
-        'Add internship and job placement tracker',
-        'Introduce scholarships suggestions',
-        'Implement machine learning for personalized study plans'
-      ]
-    },
-    {
-      name: 'Slug AI',
-      icon: <Lightbulb className="text-yellow-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: "UCSC's AI innovation initiative and hackathon platform.",
-      technologies: ['Next.js', 'GraphQL', 'AWS'],
-      features: [
-        'AI Sandbox',
-        'Partnership Program',
-        'Open-Source Repository',
-        'AI Competitions'
-      ],
-      impact: 'Establish UCSC as a leader in AI innovation and build a network of alumni and industry professionals to drive future collaborations.',
-      futurePlans: [
-        'Expand to other universities',
-        'Create a unified platform for AI education and research',
-        'Launch an AI startup incubator program'
-      ]
-    },
-    {
-      name: 'SlugSmart',
-      icon: <Rocket className="text-red-400" />,
-      image: '/placeholder.svg?height=200&width=400',
-      description: 'Smart campus app for UCSC students.',
-      technologies: ['React', 'Firebase', 'Google Cloud'],
-      features: [
-        'Customizable Dashboard',
-        'AI Advisor',
-        'Campus Navigation',
-        'Energy-Saving Tips'
-      ],
-      impact: 'SlugSmart enhances every aspect of campus life, helping students make the most of their college experience.',
-      futurePlans: [
-        'Partner with campus organizations',
-        'Introduce mental health check-ins and resources',
-        'Implement IoT integration for smart campus features'
-      ]
-    }
-  ];
-}
-
