@@ -23,6 +23,36 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '',
     NEXT_PUBLIC_ANALYTICS_ID: process.env.NEXT_PUBLIC_ANALYTICS_ID || '',
   },
+
+  // Add custom headers to handle potential CSP issues
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; img-src *; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; connect-src *; frame-src *;",
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
+  },
+
+  // Redirect non-functional CTAs to the proper external link
+  async redirects() {
+    return [
+      {
+        source: '/external-cta',
+        destination: 'https://forms.gle/z8axPyhKjWyhYWcQ9',
+        permanent: false, // Use 302 redirect for external links
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

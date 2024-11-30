@@ -329,9 +329,11 @@ function HeroSection() {
           We build modern, functional, and visually stunning digital experiences
           that elevate businesses to new heights.
         </p>
+        <a href='https://forms.gle/z8axPyhKjWyhYWcQ9' target="_blank">
         <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
           Get Started
         </Button>
+        </a>
         <div className="mt-16">
           <ChevronDown className="w-8 h-8 text-gray-400 animate-bounce" />
         </div>
@@ -524,10 +526,13 @@ function PricingSection({ plans }: { plans: Plan[] }) {
                 </ul>
               </CardContent>
               <div className="p-6 mt-auto">
+              <a href='https://forms.gle/z8axPyhKjWyhYWcQ9' target="_blank">
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300">
                   Get Started
                 </Button>
+              </a>
               </div>
+      
             </Card>
           ))}
         </div>
@@ -535,12 +540,14 @@ function PricingSection({ plans }: { plans: Plan[] }) {
           <p className="text-gray-300 mb-4">
             Need something custom? We've got you covered!
           </p>
+          <a href='https://forms.gle/z8axPyhKjWyhYWcQ9' target="_blank">
           <Button
             variant="outline"
             className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
           >
             Request a Quote
           </Button>
+          </a>
         </div>
       </div>
     </section>
@@ -592,7 +599,7 @@ function BlogSection() {
             variant="outline"
             className="hover:bg-blue-500 hover:text-white transition-colors duration-300"
           >
-            <Link href="/contact">Request Consultation</Link>
+            <Link href="https://forms.gle/z8axPyhKjWyhYWcQ9" target="_blank">Request Consultation</Link>
           </Button>
         </div>
       </div>
@@ -631,7 +638,7 @@ function ContactSection() {
                 asChild
                 className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
               >
-                <Link href="/contact">Request Consultation</Link>
+                <Link href='https://forms.gle/z8axPyhKjWyhYWcQ9' target="_blank">Request Consultation</Link>
               </Button>
             </div>
           </div>
