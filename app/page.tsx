@@ -572,13 +572,15 @@ function BlogSection() {
                   <p className="text-gray-400 mb-4 group-hover:text-gray-200 transition-colors duration-300">
                     {post.excerpt}
                   </p>
-                  <Button
-                    asChild
-                    variant="link"
-                    className="text-blue-400 hover:text-blue-300 p-0 transition-colors duration-300"
-                  >
-                    <Link href={`/blog/${post.slug}`}>Read More</Link>
-                  </Button>
+                  <Link href={`/blog/${post.slug}`} passHref>
+  <Button
+    variant="link"
+    className="text-blue-400 hover:text-blue-300 p-0 transition-colors duration-300"
+  >
+    Read More
+  </Button>
+</Link>
+
                 </CardContent>
               </Card>
             </Link>
